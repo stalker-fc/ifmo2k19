@@ -1,24 +1,31 @@
 """Hamming code"""
 
+import math
 
-
-def generate_message(message_len: int):
-    pass
-
-
-
-
-def hamming_encode(message):
-    pass
+from typing import List
+from .base import message2bin
 
 
 
-def add_noise(bytes_sequence):
-    pass
+def encode(message: str) -> List['str']:
+    words_to_encode = 4
+    bin_view = message2bin(message)
+
+
+def set_control_bytes(msg: str) -> str:
+    new = msg
+    amount = len(msg).bit_length()
+    indices = [1 << i for i in range(amount)]
+    res = []
+    for idx in range(len(msg) + amount):
+        ...
 
 
 
 
-def hamming_decode(message):
-    pass
+def decode(message: List[str], word_len: int) -> str:
+    added_bytes = len(message[0]) % 8
+
+
+
 
