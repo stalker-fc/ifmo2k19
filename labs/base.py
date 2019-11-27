@@ -1,8 +1,6 @@
 import random
 import string
 import numpy as np
-from typing import List
-import itertools
 from .constants import BYTE_LEN
 
 
