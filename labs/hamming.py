@@ -3,29 +3,31 @@
 import math
 
 from typing import List
+from itertools import chain
+
 from .base import message2bin
 
 
 
 def encode(message: str) -> List['str']:
-    words_to_encode = 4
     bin_view = message2bin(message)
+    letter_len = len(bin_view[0])
+    bin_msg = ''.join(bin_view)
+
+
+
+
+
 
 
 def set_control_bytes(msg: str) -> str:
-    new = msg
-    amount = len(msg).bit_length()
-    indices = [1 << i for i in range(amount)]
-    res = []
-    for idx in range(len(msg) + amount):
+
+    control_bytes_amount = len(msg).bit_length()
+    control_indices = [1 << i for i in range(control_bytes_amount)]
+
+
+    encoded = []
+    for idx in range(len(msg) + control_bytes_amount):
         ...
 
-
-
-
-def decode(message: List[str], word_len: int) -> str:
-    added_bytes = len(message[0]) % 8
-
-
-
-
+    return ''.join(encoded)
