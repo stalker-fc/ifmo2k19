@@ -1,8 +1,9 @@
+import random
 from labs import hamming_decode, hamming_encode, hamming_set_error
 
 
 def test_set_error():
-    init = '11100111'
+    init = ''.join((random.choice('01') for _ in range(10)))
     error = hamming_set_error(init)
 
     assert init != error

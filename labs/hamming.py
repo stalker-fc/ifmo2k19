@@ -2,10 +2,17 @@
 
 import random
 import itertools
+from typing import Optional
 from .base import message2bin, bin2message
 
 
 def encode(message: str) -> str:
+    """
+    Encodes ascii-letter`s string to binary representation using hamming code.
+
+    :param message:
+    :return:
+    """
     data = message2bin(message)
     data = insert_empty_parity_bits(data)
     parity_bits_amount = len(data).bit_length()
@@ -21,6 +28,12 @@ def encode(message: str) -> str:
 
 
 def decode(data: str) -> str:
+    """
+    Decodes binary string of hamming code to ascii-letter`s string.
+
+    :param data:
+    :return:
+    """
     parity_bits_amount = len(data).bit_length()
     parity_bits_indices = [(1 << i) - 1 for i in range(parity_bits_amount)]
     init_parity_bits = [data[idx] for idx in parity_bits_indices]
@@ -46,7 +59,7 @@ def decode(data: str) -> str:
     return bin2message(res)
 
 
-def set_error(data: str) -> str:
+def set_error(data: str, error_idx: Optional[int] = None) -> str:
     """
     Randomly changes one byte in data.
 
@@ -55,13 +68,14 @@ def set_error(data: str) -> str:
     """
     if not all((c in ('0', '1') for c in data)):
         raise ValueError('Incorrect input value.')
+    if error_idx is None:
+        error_idx = random.randint(0, len(data))
+    elif error_idx + 1 > len(data) or error_idx < 0:
+        raise ValueError('Incorrect index values.')
 
-    error_idx = random.randint(0, len(data))
     error_val = str((int(data[error_idx]) + 1) % 2)
 
     return ''.join([data[0:error_idx], error_val, data[error_idx + 1:]])
-
-
 
 
 def insert_empty_parity_bits(data: str) -> str:
