@@ -38,22 +38,23 @@ def decode(data: str) -> str:
     parity_bits_indices = [(1 << i) - 1 for i in range(parity_bits_amount)]
     init_parity_bits = [data[idx] for idx in parity_bits_indices]
 
-    bla = list(itertools.chain.from_iterable(data))
+    cleared_data = [v for v in data]
     for idx in parity_bits_indices:
-        bla[idx] = '0'
+        cleared_data[idx] = '0'
 
-    msg = ''.join(bla)
+    msg = ''.join(cleared_data)
     parity_bits_values = [calc_parity_bit_value(msg, count) for count in parity_bits_indices]
     if parity_bits_values != init_parity_bits:
         error_idx = 0
-        for a, b, c in zip(init_parity_bits, parity_bits_values, parity_bits_indices):
-            error_idx += c
-        bla[error_idx] = str((int(data[error_idx]) + 1) % 2)
+        for init, calc, idx in zip(init_parity_bits, parity_bits_values, parity_bits_indices):
+            if init != calc:
+                error_idx += idx
+        cleared_data[error_idx] = str((int(data[error_idx]) + 1) % 2)
 
     res = []
-    for idx in range(len(bla)):
+    for idx in range(len(cleared_data)):
         if idx not in parity_bits_indices:
-            res.append(bla[idx])
+            res.append(cleared_data[idx])
 
     res = ''.join(res)
     return bin2message(res)
