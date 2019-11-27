@@ -30,10 +30,18 @@ def decode(data: str) -> str:
 
     msg = ''.join(bla)
     parity_bits_values = [calc_parity_bit_value(msg, count) for count in parity_bits_indices]
+    if parity_bits_values != init_parity_bits:
+        error_idx = 0
+        for a, b, c in zip(init_parity_bits, parity_bits_values, parity_bits_indices):
+            error_idx += c
+        bla[error_idx] = str((int(data[error_idx]) + 1) % 2)
 
+    res = []
+    for idx in range(len(bla)):
+        if idx not in parity_bits_indices:
+            res = bla[idx]
 
-
-
+    return ''.join(res)
 
 
 def insert_empty_parity_bits(data: str) -> str:
@@ -63,8 +71,3 @@ def calc_parity_bit_value(data, parity_idx):
         value += sum([int(data[i]) for i in range(start + offset, len(data), step)])
 
     return str(value % 2)
-
-
-
-
-
