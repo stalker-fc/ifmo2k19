@@ -1,7 +1,8 @@
 """Hamming code"""
 
+import random
 import itertools
-from .base import message2bin
+from .base import message2bin, bin2message
 
 
 def encode(message: str) -> str:
@@ -39,9 +40,28 @@ def decode(data: str) -> str:
     res = []
     for idx in range(len(bla)):
         if idx not in parity_bits_indices:
-            res = bla[idx]
+            res.append(bla[idx])
 
-    return ''.join(res)
+    res = ''.join(res)
+    return bin2message(res)
+
+
+def set_error(data: str) -> str:
+    """
+    Randomly changes one byte in data.
+
+    :param data:
+    :return:
+    """
+    if not all((c in ('0', '1') for c in data)):
+        raise ValueError('Incorrect input value.')
+
+    error_idx = random.randint(0, len(data))
+    error_val = str((int(data[error_idx]) + 1) % 2)
+
+    return ''.join([data[0:error_idx], error_val, data[error_idx + 1:]])
+
+
 
 
 def insert_empty_parity_bits(data: str) -> str:

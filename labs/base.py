@@ -4,7 +4,6 @@ import numpy as np
 from .constants import BYTE_LEN
 
 
-
 def generate_message(message_len: int = 10) -> str:
     """Generates random ascii-string with given length."""
     return ''.join((random.choice(string.ascii_letters) for _ in range(message_len)))
