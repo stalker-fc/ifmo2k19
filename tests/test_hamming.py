@@ -40,4 +40,4 @@ def test_hamming_with_error():
     encoded_with_error = hamming_set_error(encoded)
 
     decoded = hamming_decode(encoded_with_error)
-    assert init_message == decoded
+    assert decoded == init_message

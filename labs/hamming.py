@@ -38,23 +38,20 @@ def decode(data: str) -> str:
     parity_bits_indices = [(1 << i) - 1 for i in range(parity_bits_amount)]
     init_parity_bits = [data[idx] for idx in parity_bits_indices]
 
-    cleared_data = [v for v in data]
-    for idx in parity_bits_indices:
-        cleared_data[idx] = '0'
-
-    msg = ''.join(cleared_data)
-    parity_bits_values = [calc_parity_bit_value(msg, count) for count in parity_bits_indices]
+    parity_bits_values = [calc_parity_bit_value(data, count) for count in parity_bits_indices]
+    data = [int(value) for value in data]
     if parity_bits_values != init_parity_bits:
         error_idx = 0
         for init, calc, idx in zip(init_parity_bits, parity_bits_values, parity_bits_indices):
             if init != calc:
-                error_idx += idx
-        cleared_data[error_idx] = str((int(data[error_idx]) + 1) % 2)
+                error_idx += idx + 1
+        error_idx -= 1
+        data[error_idx] = (data[error_idx] + 1) % 2
 
     res = []
-    for idx in range(len(cleared_data)):
+    for idx, value in enumerate(data):
         if idx not in parity_bits_indices:
-            res.append(cleared_data[idx])
+            res.append(str(value))
 
     res = ''.join(res)
     return bin2message(res)
@@ -101,8 +98,14 @@ def calc_parity_bit_value(data, parity_idx):
     block = 2 ** deg
     step = 2 ** (deg + 1)
 
-    value = 0
+    sum_indices = []
     for offset in range(block):
-        value += sum([int(data[i]) for i in range(start + offset, len(data), step)])
+        sum_indices.extend(list(range(start + offset, len(data), step)))
+    sum_indices = list(sorted(sum_indices))
+    sum_indices.pop(0)
+
+    value = 0
+    for idx in sum_indices:
+        value += int(data[idx])
 
     return str(value % 2)
