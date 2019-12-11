@@ -1,5 +1,7 @@
-"""Hamming code"""
+"""Hamming code
 
+https://habr.com/ru/post/140611/
+"""
 import random
 import itertools
 from typing import Optional
