@@ -1,4 +1,4 @@
-from .base import generate_message
+from .base import generate_message, generate_binary_data
 
 from .hamming import encode as hamming_encode
 from .hamming import decode as hamming_decode

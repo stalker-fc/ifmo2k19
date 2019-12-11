@@ -9,6 +9,10 @@ def generate_message(message_len: int = 10) -> str:
     return ''.join((random.choice(string.ascii_letters) for _ in range(message_len)))
 
 
+def generate_binary_data(data_len: int = 8) -> str:
+    return ''.join((random.choice(('0', '1')) for _ in range(data_len)))
+
+
 def message2bin(message: str) -> str:
     """
     Converts ascii-letter message to bytes representation.
