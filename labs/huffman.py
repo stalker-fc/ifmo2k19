@@ -2,16 +2,18 @@ from collections import Counter
 from typing import Tuple, Dict
 
 
-def compress(data: str) -> Tuple[str, Dict[str, str]]:
-    counter = Counter(data)
+def compress(message: str) -> Tuple[str, Dict[str, str]]:
+    counter = Counter(message)
     n = sum(counter.values())
     frequencies = {symbol: freq / n for symbol, freq in counter.items()}
     encoding_tree = make_encoding_tree(frequencies)
-    compressed = ''.join([encoding_tree[c] for c in data])
+    compressed = ''.join([encoding_tree[c] for c in message])
     return compressed, encoding_tree
 
 
 def make_encoding_tree(frequencies: Dict[str, float]) -> Dict[str, str]:
+    if len(frequencies) == 1:
+        return dict(zip(frequencies.keys(), ['0']))
     if len(frequencies) == 2:
         return dict(zip(frequencies.keys(), ['0', '1']))
 

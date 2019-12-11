@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "labs"
 version = "0.1.0"
-description = "Очередные лабораторные работы"
+description = "Лабораторные работы по современной теории информации"
 authors = ["Stepanov Sergey <stalker-fc@yandex.ru>"]
 readme = "README.md"
 
@@ -11,7 +11,7 @@ numpy = "^1.17"
 typing = "^3.7"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^5.3"
 pytest-cov = "^2.8"
 tox = "^3.14"
 mypy = "^0.740"
