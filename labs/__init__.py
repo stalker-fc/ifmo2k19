@@ -7,3 +7,7 @@ from .hamming import set_error as hamming_set_error
 
 from .huffman import compress as huffman_compress
 from .huffman import compress as huffman_decompress
+
+
+from .golay import encode as golay_encode
+from .golay import decode as golay_decode

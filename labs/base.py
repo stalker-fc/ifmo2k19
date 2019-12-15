@@ -4,6 +4,17 @@ import numpy as np
 from .constants import BYTE_LEN
 
 
+
+def bin2array(data: str) -> np.ndarray:
+    data = np.array([int(v) for v in data])
+    assert min(data) >= 0 and max(data) <= 1
+    return data
+
+def array2bin(data: np.ndarray) -> str:
+    return ''.join([str(v) for v in data])
+
+
+
 def generate_message(message_len: int = 10) -> str:
     """Generates random ascii-string with given length."""
     return ''.join((random.choice(string.ascii_letters) for _ in range(message_len)))
