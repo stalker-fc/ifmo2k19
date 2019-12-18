@@ -6,12 +6,10 @@ n = 24
 k = 12
 d = 8
 # (24, 12, 8)
-# общая длина 24 бита
-# длина кодируемого сообщения 12 бит
-# длина проверочной части 11 бит
-# 1 бит четности
+# common length 24 bits
+# amount of data bits: 12
+# amount of check bits: 11
 
-# We use this matrix as the parity submatrix P
 P = np.array([
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
     [1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, ],
@@ -30,9 +28,6 @@ P = np.array([
 # generator mtx G, where transmitted codewords (24bits) are
 # G.T dot msg or (msg dot G) (msg is 12 bit message)
 # 2**12 = 4096 total codewords, one for each msg
-# (all mod 2 arithmetic)
-# other G matrices give golay (24,12,8) codes, but this one
-# matches existing codes from pre 2010 used in knight lab
 G = np.concatenate((P, np.eye(12, dtype="int")), axis=1)
 
 # pairity check matrix H satisfies G dot H.T = zeros (mod 2 arithmetic)
