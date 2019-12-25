@@ -62,7 +62,7 @@ def get_error_idx(bits: np.ndarray):
     failed_checks = np.zeros(bits.shape[0])
     for idx in range(r):
         mask = H[idx]
-        parity = np.sum(bits) % 2
+        parity = np.sum(bits * mask) % 2
         if parity != 0:
             failed_checks[mask == 1] += 1
     return np.argmax(failed_checks)

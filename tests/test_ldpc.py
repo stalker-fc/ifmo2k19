@@ -1,15 +1,21 @@
+import numpy as np
+from typing import List
 from labs import ldpc_encode, ldpc_decode
-from labs.base import generate_binary_data, set_error
+from labs.base import generate_binary_data, set_error, array2bin
 
+
+
+def get_all_codewords() -> List[str]:
+    codes = np.arange(0, 16)
+    return [np.binary_repr(code, width=4) for code in codes]
 
 def test_ldpc():
-    data = generate_binary_data(4)
+    for data in get_all_codewords():
+        encoded = ldpc_encode(data)
+        assert len(encoded) == 10
 
-    encoded = ldpc_encode(data)
-    assert len(encoded) == 10
-
-    decoded = ldpc_decode(encoded)
-    assert data == decoded
+        decoded = ldpc_decode(encoded)
+        assert data == decoded
 
 
 
