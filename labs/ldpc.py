@@ -49,7 +49,7 @@ def decode(bits: str) -> str:
 
 
 def fix(bits: np.ndarray) -> np.ndarray:
-    for i in range(100):
+    for i in range(r):
         syndrome = np.dot(H, bits)
         if not np.any(syndrome):
             return bits
